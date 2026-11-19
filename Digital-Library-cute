@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RoséLoom — Pink Soft Digital Library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --bg-blush: #fff6f9;
+      --bg-surface: #ffffff;
+      --bg-rose-soft: #fde8ef;
+      --bg-rose-tint: #fff0f5;
+      --pink-petal: #f7c6d7;
+      --pink-rose: #df7b9d;
+      --pink-deep: #b85276;
+      --gold-soft: #f9efe4;
+      --text-plum: #381e28;
+      --text-muted: #785864;
+      --border-rose: #f3d2de;
+      --shadow-soft: 0 12px 32px rgba(184, 82, 118, 0.08);
+      --shadow-hover: 0 18px 40px rgba(184, 82, 118, 0.15);
+      --radius-lg: 24px;
+      --radius-md: 16px;
+      --radius-sm: 10px;
+      --transition: 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top right, #ffeaf1 0%, var(--bg-blush) 45%, #fff9fb 100%);
+      color: var(--text-plum);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    h1,
+    h2,
+    h3,
+    .brand-name,
+    .spotlight-title {
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-weight: 700;
+      line-height: 1.15;
+    }
+
+    .container {
+      width: min(1180px, 92%);
+      margin-inline: auto;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* Navbar */
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      backdrop-filter: blur(14px);
+      background: rgba(255, 246, 249, 0.85);
+      border-bottom: 1px solid var(--border-rose);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding-block: 0.9rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      text-decoration: none;
+      color: var(--text-plum);
+    }
+
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--pink-rose), var(--pink-deep));
+      color: #fff;
+      font-size: 1.1rem;
+      box-shadow: 0 6px 16px rgba(184, 82, 118, 0.25);
+    }
+
+    .brand-name {
+      display: block;
+      font-size: 1.45rem;
+    }
+
+    .brand-tag {
+      display: block;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .nav-search {
+      position: relative;
+      flex: 1;
+      max-width: 410px;
+    }
+
+    .nav-search input {
+      width: 100%;
+      padding: 0.68rem 1rem 0.68rem 2.5rem;
+      border-radius: 999px;
+      border: 1px solid var(--border-rose);
+      background: var(--bg-surface);
+      color: var(--text-plum);
+      font-family: inherit;
+      font-size: 0.9rem;
+      transition: var(--transition);
+    }
+
+    .nav-search input:focus {
+      outline: none;
+      border-color: var(--pink-rose);
+      box-shadow: 0 0 0 4px rgba(223, 123, 157, 0.16);
+    }
+
+    .search-icon {
+      position: absolute;
+      left: 0.95rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .user-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.42rem 0.85rem;
+      border-radius: 999px;
+      background: var(--bg-rose-soft);
+      border: 1px solid var(--pink-petal);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text-plum);
+    }
+
+    .user-tier-badge {
+      background: var(--gold-soft);
+      color: #8b5e34;
+      border: 1px solid #e7cfa9;
+      padding: 0.12rem 0.45rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.68rem 1.25rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      font-family: inherit;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .btn-sm {
+      padding: 0.45rem 0.9rem;
+      font-size: 0.8rem;
+    }
+
+    .btn-full {
+      width: 100%;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--pink-rose), var(--pink-deep));
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(184, 82, 118, 0.24);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 24px rgba(184, 82, 118, 0.32);
+    }
+
+    .btn-soft {
+      background: var(--bg-rose-soft);
+      color: var(--pink-deep);
+      border-color: var(--pink-petal);
+    }
+
+    .btn-soft:hover {
+      background: var(--pink-petal);
+    }
+
+    .btn-outline {
+      background: var(--bg-surface);
+      color: var(--text-plum);
+      border-color: var(--border-rose);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--pink-rose);
+      background: var(--bg-rose-tint);
+    }
+
+    /* Hero Section */
+    .hero {
+      padding-block: 3rem 2.2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.25fr 0.85fr;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--pink-deep);
+      background: var(--bg-rose-soft);
+      padding: 0.35rem 0.85rem;
+      border-radius: 999px;
+      margin-bottom: 0.9rem;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.3rem, 4.4vw, 3.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 em {
+      color: var(--pink-deep);
+      font-style: italic;
+    }
+
+    .hero-copy p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 56ch;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-cta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 2rem;
+      padding-top: 1.1rem;
+      border-top: 1px dashed var(--border-rose);
+    }
+
+    .hero-stats strong {
+      display: block;
+      font-size: 1.35rem;
+      color: var(--pink-deep);
+    }
+
+    .hero-stats span {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    /* Spotlight Card */
+    .spotlight-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-rose);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .spotlight-card:hover {
+      box-shadow: var(--shadow-hover);
+      transform: translateY(-3px);
+    }
+
+    .spotlight-media {
+      position: relative;
+      height: 215px;
+      overflow: hidden;
+    }
+
+    .spotlight-media img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .spotlight-badge {
+      position: absolute;
+      top: 0.85rem;
+      left: 0.85rem;
+      background: rgba(255, 255, 255, 0.92);
+      color: var(--pink-deep);
+      padding: 0.28rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+    }
+
+    .spotlight-body {
+      padding: 1.25rem 1.4rem 1.4rem;
+    }
+
+    .spotlight-title {
+      font-size: 1.55rem;
+      margin-block: 0.25rem 0.5rem;
+    }
+
+    .spotlight-body p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    /* Catalog Toolbar */
+    .catalog-section {
+      padding-block: 1.2rem 4rem;
+    }
+
+    .catalog-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--border-rose);
+      padding: 0.8rem 1rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-soft);
+    }
+
+    .category-tabs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+    }
+
+    .tab-btn {
+      padding: 0.5rem 0.95rem;
+      border-radius: 999px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-muted);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .tab-btn:hover {
+      color: var(--pink-deep);
+      background: var(--bg-rose-tint);
+    }
+
+    .tab-btn.active {
+      background: linear-gradient(135deg, var(--pink-rose), var(--pink-deep));
+      color: #fff;
+      box-shadow: 0 6px 14px rgba(184, 82, 118, 0.22);
+    }
+
+    .sort-box {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .sort-box select,
+    .form-group select,
+    .form-group input {
+      padding: 0.52rem 0.85rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-rose);
+      background: var(--bg-surface);
+      color: var(--text-plum);
+      font-family: inherit;
+      font-size: 0.88rem;
+    }
+
+    .catalog-meta {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-block: 1.1rem 1.3rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .access-note {
+      background: var(--gold-soft);
+      color: #87592d;
+      border: 1px solid #ead2ae;
+      padding: 0.28rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+    }
+
+    .access-note.unlocked {
+      background: #e9f8ef;
+      color: #276749;
+      border-color: #b7e4c7;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-rose);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-soft);
+      transition: var(--transition);
+    }
+
+    .book-card:hover {
+      transform: translateY(-5px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--pink-petal);
+    }
+
+    .book-cover {
+      position: relative;
+      height: 205px;
+      background: var(--bg-rose-soft);
+      overflow: hidden;
+    }
+
+    .book-cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.45s ease;
+    }
+
+    .book-card:hover .book-cover img {
+      transform: scale(1.04);
+    }
+
+    .card-top-badges {
+      position: absolute;
+      inset: 0.75rem 0.75rem auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .badge-cat {
+      background: rgba(255, 255, 255, 0.93);
+      color: var(--pink-deep);
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      font-size: 0.74rem;
+      font-weight: 700;
+      box-shadow: 0 4px 10px rgba(56, 30, 40, 0.08);
+    }
+
+    .badge-vip {
+      background: linear-gradient(135deg, #d9a066, #b67b42);
+      color: #fff;
+      padding: 0.25rem 0.65rem;
+      border-radius: 999px;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+
+    .book-body {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      padding: 1.15rem 1.25rem 1.25rem;
+    }
+
+    .book-meta-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.76rem;
+      color: var(--text-muted);
+      margin-bottom: 0.35rem;
+    }
+
+    .book-title {
+      font-size: 1.4rem;
+      margin-bottom: 0.45rem;
+    }
+
+    .book-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      flex: 1;
+      margin-bottom: 1.1rem;
+    }
+
+    .book-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.6rem;
+      padding-top: 0.85rem;
+      border-top: 1px solid var(--bg-rose-soft);
+    }
+
+    .fav-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid var(--border-rose);
+      background: var(--bg-rose-tint);
+      color: var(--pink-deep);
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+
+    .fav-btn:hover,
+    .fav-btn.active {
+      background: var(--pink-rose);
+      color: #fff;
+      border-color: var(--pink-rose);
+    }
+
+    /* Empty State */
+    .empty-state {
+      text-align: center;
+      padding: 3.5rem 1.5rem;
+      background: var(--bg-surface);
+      border: 1px dashed var(--pink-petal);
+      border-radius: var(--radius-lg);
+      margin-top: 1rem;
+    }
+
+    .empty-icon {
+      font-size: 2.4rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .empty-state p {
+      color: var(--text-muted);
+      margin-block: 0.4rem 1.2rem;
+    }
+
+    /* Modals */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      z-index: 60;
+      display: grid;
+      place-items: center;
+      padding: 1rem;
+      background: rgba(56, 30, 40, 0.45);
+      backdrop-filter: blur(6px);
+    }
+
+    .modal-dialog {
+      position: relative;
+      width: min(820px, 100%);
+      max-height: 88vh;
+      overflow-y: auto;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-rose);
+      border-radius: var(--radius-lg);
+      padding: 1.8rem;
+      box-shadow: 0 24px 60px rgba(56, 30, 40, 0.25);
+      animation: popIn 0.22s ease;
+    }
+
+    .modal-auth {
+      width: min(440px, 100%);
+    }
+
+    @keyframes popIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.98);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid var(--border-rose);
+      background: var(--bg-rose-tint);
+      color: var(--text-plum);
+      font-size: 0.95rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover {
+      background: var(--pink-petal);
+    }
+
+    .reader-layout {
+      display: grid;
+      grid-template-columns: 250px 1fr;
+      gap: 1.5rem;
+      align-items: start;
+    }
+
+    .reader-cover {
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      border: 1px solid var(--border-rose);
+    }
+
+    .reader-cover img {
+      width: 100%;
+      height: 310px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .reader-body h2 {
+      font-size: 2rem;
+      margin-block: 0.3rem 0.5rem;
+    }
+
+    .reader-sub {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .reader-excerpt {
+      background: var(--bg-rose-tint);
+      border-left: 3px solid var(--pink-rose);
+      padding: 1rem 1.15rem;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.94rem;
+      white-space: pre-line;
+      margin-bottom: 1.2rem;
+    }
+
+    .locked-box {
+      background: var(--gold-soft);
+      border: 1px solid #e6cba3;
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .locked-box h3 {
+      font-size: 1.45rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .locked-box p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .note-box {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px dashed var(--border-rose);
+    }
+
+    .note-box label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 600;
+      margin-bottom: 0.4rem;
+    }
+
+    .note-box textarea {
+      width: 100%;
+      min-height: 76px;
+      padding: 0.7rem;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-rose);
+      font-family: inherit;
+      font-size: 0.88rem;
+      resize: vertical;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Auth Form */
+    .auth-header {
+      margin-bottom: 1.2rem;
+      padding-right: 1.5rem;
+    }
+
+    .auth-header h2 {
+      font-size: 1.9rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .auth-form .form-group {
+      margin-bottom: 0.9rem;
+    }
+
+    .auth-form label {
+      display: block;
+      font-size: 0.84rem;
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .auth-form input,
+    .auth-form select {
+      width: 100%;
+    }
+
+    .auth-divider {
+      text-align: center;
+      margin-block: 1rem;
+      position: relative;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .auth-divider::before {
+      content: "";
+      position: absolute;
+      inset-inline: 0;
+      top: 50%;
+      height: 1px;
+      background: var(--border-rose);
+      z-index: 0;
+    }
+
+    .auth-divider span {
+      position: relative;
+      background: var(--bg-surface);
+      padding-inline: 0.6rem;
+      z-index: 1;
+    }
+
+    /* Footer */
+    .footer {
+      border-top: 1px solid var(--border-rose);
+      background: rgba(255, 255, 255, 0.7);
+      padding-block: 1.6rem;
+    }
+
+    .footer-inner {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.8rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .footer-inner strong {
+      color: var(--text-plum);
+    }
+
+    /* Toast */
+    .toast {
+      position: fixed;
+      bottom: 1.4rem;
+      right: 1.4rem;
+      z-index: 80;
+      background: var(--text-plum);
+      color: #fff;
+      padding: 0.75rem 1.15rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      box-shadow: 0 12px 28px rgba(56, 30, 40, 0.25);
+    }
+
+    @media (max-width: 820px) {
+      .hero-grid,
+      .reader-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-inner {
+        flex-wrap: wrap;
+      }
+
+      .nav-search {
+        order: 3;
+        max-width: 100%;
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#" class="brand">
+        <span class="brand-mark">✦</span>
+        <div>
+          <span class="brand-name">RoséLoom</span>
+          <span class="brand-tag">Atelier Digital Library</span>
+        </div>
+      </a>
+
+      <div class="nav-search">
+        <span class="search-icon">🔍</span>
+        <input
+          type="text"
+          id="searchInput"
+          placeholder="Cari cerita, novel, komik, pelajaran, tips..."
+          aria-label="Cari koleksi"
+        />
+      </div>
+
+      <div class="nav-actions" id="authArea">
+        <button class="btn btn-outline" id="openLoginBtn" type="button">
+          Masuk / Akses
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">✧ Edisi Koleksi Pribadi &amp; Komunitas</span>
+        <h1>Ruang Baca Elegan dengan Sentuhan <em>Pink Lembut</em></h1>
+        <p>
+          Nikmati kurasi cerita pendek, novel romantis-inspirasional, komik pilihan,
+          ringkasan pelajaran, hingga panduan perawatan &amp; kecantikan dalam satu
+          rak digital yang menenangkan.
+        </p>
+        <div class="hero-cta">
+          <button class="btn btn-primary" id="exploreBtn" type="button">
+            Jelajahi Koleksi
+          </button>
+          <button class="btn btn-soft" id="quickDemoBtn" type="button">
+            Akses Demo Pembaca
+          </button>
+        </div>
+        <div class="hero-stats">
+          <div>
+            <strong id="totalCount">0</strong>
+            <span>Judul Kurasi</span>
+          </div>
+          <div>
+            <strong>5</strong>
+            <span>Kategori Utama</span>
+          </div>
+          <div>
+            <strong id="savedCount">0</strong>
+            <span>Tersimpan</span>
+          </div>
+        </div>
+      </div>
+
+      <aside class="spotlight-card" id="spotlightCard" aria-label="Rekomendasi Hari Ini"></aside>
+    </div>
+  </section>
+
+  <main class="container catalog-section" id="catalogSection">
+    <div class="catalog-toolbar">
+      <div class="category-tabs" role="tablist" aria-label="Filter Kategori">
+        <button class="tab-btn active" data-category="Semua" type="button">Semua</button>
+        <button class="tab-btn" data-category="Cerita" type="button">Cerita</button>
+        <button class="tab-btn" data-category="Novel" type="button">Novel</button>
+        <button class="tab-btn" data-category="Komik" type="button">Komik</button>
+        <button class="tab-btn" data-category="Pelajaran" type="button">Pelajaran</button>
+        <button class="tab-btn" data-category="Tips Kecantikan" type="button">Tips Kecantikan</button>
+        <button class="tab-btn" data-category="Favorit" type="button">
+          ♥ Favorit (<span id="favTabCount">0</span>)
+        </button>
+      </div>
+
+      <div class="sort-box">
+        <label for="sortSelect">Urutkan:</label>
+        <select id="sortSelect">
+          <option value="featured">Pilihan Editor</option>
+          <option value="title-asc">Judul (A–Z)</option>
+          <option value="read-asc">Waktu Baca Tersingkat</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="catalog-meta">
+      <p id="resultInfo">Menampilkan semua koleksi</p>
+      <span class="access-note" id="accessStatusBanner">
+        Status: Pengunjung Umum (Beberapa konten member terkunci)
+      </span>
+    </div>
+
+    <div class="cards-grid" id="cardsGrid"></div>
+
+    <div class="empty-state hidden" id="emptyState">
+      <div class="empty-icon">🌸</div>
+      <h3>Belum ada bacaan yang cocok</h3>
+      <p>Coba gunakan kata kunci lain atau pilih kembali kategori "Semua".</p>
+      <button class="btn btn-primary" id="resetFilterBtn" type="button">
+        Reset Filter
+      </button>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>RoséLoom Digital Library</strong>
+        <p>Satu file HTML siap di-hosting di GitHub Pages.</p>
+      </div>
+      <p class="footer-note">✧ Baca pelan, simpan yang bermakna, rawat diri setiap hari.</p>
+    </div>
+  </footer>
+
+  <div class="modal-backdrop hidden" id="readerModal" role="dialog" aria-modal="true" aria-labelledby="readerTitle">
+    <div class="modal-dialog">
+      <button class="modal-close" id="closeReaderBtn" type="button" aria-label="Tutup">✕</button>
+      <div class="reader-layout" id="readerContent"></div>
+    </div>
+  </div>
+
+  <div class="modal-backdrop hidden" id="authModal" role="dialog" aria-modal="true" aria-labelledby="authTitle">
+    <div class="modal-dialog modal-auth">
+      <button class="modal-close" id="closeAuthBtn" type="button" aria-label="Tutup">✕</button>
+      <div class="auth-header">
+        <span class="eyebrow">✧ Akses Pembaca &amp; Member</span>
+        <h2 id="authTitle">Masuk ke RoséLoom</h2>
+        <p>
+          Simpan bacaan favorit, catatan pribadi, dan buka akses konten khusus member
+          di perangkat ini.
+        </p>
+      </div>
+
+      <form id="loginForm" class="auth-form">
+        <div class="form-group">
+          <label for="memberName">Nama Pembaca</label>
+          <input type="text" id="memberName" placeholder="Contoh: Nadira Putri" required />
+        </div>
+        <div class="form-group">
+          <label for="memberEmail">Email</label>
+          <input type="email" id="memberEmail" placeholder="nadira@contoh.com" required />
+        </div>
+        <div class="form-group">
+          <label for="memberTier">Tipe Akses</label>
+          <select id="memberTier">
+            <option value="Member Gold">Member Gold (Akses Semua Konten &amp; Catatan)</option>
+            <option value="Pembaca Reguler">Pembaca Reguler (Simpan Favorit &amp; Riwayat)</option>
+          </select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-full">
+          Masuk &amp; Aktifkan Akses
+        </button>
+      </form>
+
+      <div class="auth-divider"><span>atau</span></div>
+
+      <button type="button" class="btn btn-soft btn-full" id="modalDemoBtn">
+        Masuk Instan sebagai Akun Demo (Clara)
+      </button>
+    </div>
+  </div>
+
+  <div class="toast hidden" id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const LIBRARY_ITEMS = [
+      {
+        id: "cerita-1",
+        title: "Surat di Balik Kedai Bunga Mawar",
+        category: "Cerita",
+        author: "Alya Rahma",
+        readTime: "6 mnt baca",
+        vipOnly: false,
+        cover: "https://images.unsplash.com/photo-1490750967868-88aa4486c946?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Kisah hangat tentang seorang ilustrator yang menemukan pesan rahasia di balik buket mawar merah muda setiap sore hujan.",
+        content:
+          "Hujan rintik membasahi kaca jendela kedai kecil di sudut kota. Naya menaruh kuas cat airnya, lalu membuka pita satin merah muda yang mengikat seikat mawar segar.\n\nDi balik kartu ucapan putih gading, tertulis kalimat sederhana: 'Kalau hari ini terasa berat, mampirlah minum teh melati sebelum pulang.' Sejak hari itu, sore hujan tidak lagi terasa sepi."
+      },
+      {
+        id: "novel-1",
+        title: "Musim Semi di Kota Kaca",
+        category: "Novel",
+        author: "Klara Wijaya",
+        readTime: "14 mnt baca",
+        vipOnly: true,
+        cover: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Cuplikan novel drama romansa tentang dua arsitek muda yang bertemu kembali saat merestorasi perpustakaan tua.",
+        content:
+          "Bab 1 — Cahaya di Rak Kayu\n\nRak-rak kayu mahoni itu menyimpan debu selama dua dekade sebelum akhirnya disentuh sinar matahari pagi. Raka menatap denah lama di tangannya, sementara Hana menyusun ulang buku-buku bersampul kain linen.\n\n'Kadang kita perlu membongkar masa lalu,' kata Hana pelan, 'bukan untuk melupakannya, tapi agar ruangnya cukup untuk awal yang baru.'"
+      },
+      {
+        id: "komik-1",
+        title: "Momo & Kucing Awan Vol. 1",
+        category: "Komik",
+        author: "Miko Studio",
+        readTime: "8 mnt baca",
+        vipOnly: false,
+        cover: "https://images.unsplash.com/photo-1618519764620-7403abdbdfe9?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Komik slice-of-life penuh warna pastel tentang gadis pembuat kue dan kucing kecil yang bisa mendeteksi suasana hati.",
+        content:
+          "[Panel 1] Pagi hari di dapur pastel. Momo mengocok adonan stroberi sambil bernyanyi kecil.\n[Panel 2] Kucing putih bernama Mochi melompat ke meja dan telinganya berkedut.\n[Panel 3] 'Ada tetangga yang sedang sedih, Momo!' — Mochi mengibaskan ekornya ke arah jendela.\n[Panel 4] Momo membungkus satu kotak cupcake hangat dengan pita merah muda dan tersenyum."
+      },
+      {
+        id: "pelajaran-1",
+        title: "Seni Menyusun Catatan Belajar Efektif",
+        category: "Pelajaran",
+        author: "Dr. Sinta Pratiwi",
+        readTime: "10 mnt baca",
+        vipOnly: false,
+        cover: "https://images.unsplash.com/photo-1456324504439-367cee3b3c32?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Panduan praktis metode Cornell, active recall, dan pengulangan berjadwal agar belajar lebih ringkas dan tidak mudah lupa.",
+        content:
+          "1. Gunakan Ringkasan Bahasa Sendiri: Setelah membaca satu subbab, tutup buku dan tulis 3 poin utama dengan kalimatmu sendiri.\n2. Terapkan Spaced Repetition: Ulangi materi setelah 1 hari, 3 hari, dan 7 hari.\n3. Pisahkan Pertanyaan & Jawaban: Buat kolom pertanyaan di sisi kiri catatan untuk menguji pemahaman sebelum ujian."
+      },
+      {
+        id: "kecantikan-1",
+        title: "Ritual Glow Skin Pagi & Malam",
+        category: "Tips Kecantikan",
+        author: "Nadia Kusuma",
+        readTime: "7 mnt baca",
+        vipOnly: true,
+        cover: "https://images.unsplash.com/photo-1556228578-8c89e6adf883?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Langkah perawatan kulit lembut untuk menjaga hidrasi, skin barrier sehat, dan kilau alami tanpa rutinitas berlebihan.",
+        content:
+          "Pagi Hari (Fokus Perlindungan):\n• Gentle cleanser tanpa membuat kulit terasa ketarik.\n• Hydrating toner atau serum niacinamide/hyaluronic acid.\n• Moisturizer ringan + Sunscreen SPF 30+ setiap hari.\n\nMalam Hari (Fokus Pemulihan):\n• Double cleansing jika memakai sunscreen/makeup.\n• Pelembap dengan ceramide untuk menjaga skin barrier tetap lembap semalaman."
+      },
+      {
+        id: "kecantikan-2",
+        title: "Panduan Warna Lip Tint & Blush Soft Glam",
+        category: "Tips Kecantikan",
+        author: "Nadia Kusuma",
+        readTime: "5 mnt baca",
+        vipOnly: false,
+        cover: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=800&q=80",
+        description:
+          "Cara memadukan rona rose, peach, dan berry lembut agar tampilan wajah terlihat segar dan natural sepanjang hari.",
+        content:
+          "• Undertone Cool / Neutral: Rona rose pink, mauve, dan soft berry memberi kesan cerah bersih.\n• Undertone Warm: Rona warm peach, apricot, dan rosewood terasa menyatu hangat.\n• Tips Aplikasi: Tap blush tipis di bagian atas tulang pipi ke arah pelipis agar wajah tampak terangkat."
+      }
+    ];
+
+    const STORAGE_KEYS = {
+      user: "roseloom_single_user_v1",
+      favorites: "roseloom_single_favorites_v1",
+      notes: "roseloom_single_notes_v1"
+    };
+
+    const state = {
+      category: "Semua",
+      search: "",
+      sort: "featured",
+      user: loadJSON(STORAGE_KEYS.user, null),
+      favorites: loadJSON(STORAGE_KEYS.favorites, ["cerita-1", "kecantikan-2"]),
+      notes: loadJSON(STORAGE_KEYS.notes, {})
+    };
+
+    const cardsGrid = document.getElementById("cardsGrid");
+    const spotlightCard = document.getElementById("spotlightCard");
+    const searchInput = document.getElementById("searchInput");
+    const sortSelect = document.getElementById("sortSelect");
+    const resultInfo = document.getElementById("resultInfo");
+    const emptyState = document.getElementById("emptyState");
+    const resetFilterBtn = document.getElementById("resetFilterBtn");
+    const authArea = document.getElementById("authArea");
+    const accessStatusBanner = document.getElementById("accessStatusBanner");
+    const totalCount = document.getElementById("totalCount");
+    const savedCount = document.getElementById("savedCount");
+    const favTabCount = document.getElementById("favTabCount");
+
+    const readerModal = document.getElementById("readerModal");
+    const readerContent = document.getElementById("readerContent");
+    const closeReaderBtn = document.getElementById("closeReaderBtn");
+
+    const authModal = document.getElementById("authModal");
+    const closeAuthBtn = document.getElementById("closeAuthBtn");
+    const loginForm = document.getElementById("loginForm");
+    const modalDemoBtn = document.getElementById("modalDemoBtn");
+    const quickDemoBtn = document.getElementById("quickDemoBtn");
+    const exploreBtn = document.getElementById("exploreBtn");
+    const toastEl = document.getElementById("toast");
+
+    function loadJSON(key, fallback) {
+      try {
+        const raw = localStorage.getItem(key);
+        return raw ? JSON.parse(raw) : fallback;
+      } catch {
+        return fallback;
+      }
+    }
+
+    function saveJSON(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function showToast(message) {
+      toastEl.textContent = message;
+      toastEl.classList.remove("hidden");
+      clearTimeout(showToast._timer);
+      showToast._timer = setTimeout(() => {
+        toastEl.classList.add("hidden");
+      }, 2600);
+    }
+
+    function updateStats() {
+      totalCount.textContent = LIBRARY_ITEMS.length;
+      savedCount.textContent = state.favorites.length;
+      favTabCount.textContent = state.favorites.length;
+    }
+
+    function renderAuthUI() {
+      if (state.user) {
+        authArea.innerHTML = `
+          <div class="user-chip">
+            <span>${escapeHTML(state.user.name)}</span>
+            <span class="user-tier-badge">${escapeHTML(state.user.tier)}</span>
+          </div>
+          <button class="btn btn-outline btn-sm" id="logoutBtn" type="button">Keluar</button>
+        `;
+        document.getElementById("logoutBtn").addEventListener("click", handleLogout);
+        accessStatusBanner.textContent = `Status: Masuk sebagai ${state.user.name} (${state.user.tier})`;
+        accessStatusBanner.classList.add("unlocked");
+      } else {
+        authArea.innerHTML = `
+          <button class="btn btn-outline" id="openLoginBtn" type="button">Masuk / Akses</button>
+        `;
+        document.getElementById("openLoginBtn").addEventListener("click", openAuthModal);
+        accessStatusBanner.textContent = "Status: Pengunjung Umum (Beberapa konten member terkunci)";
+        accessStatusBanner.classList.remove("unlocked");
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("memberName").value.trim();
+      const email = document.getElementById("memberEmail").value.trim();
+      const tier = document.getElementById("memberTier").value;
+      if (!name || !email) return;
+
+      state.user = { name, email, tier };
+      saveJSON(STORAGE_KEYS.user, state.user);
+      closeAuthModal();
+      renderAuthUI();
+      renderCards();
+      showToast(`Selamat datang, ${name}! Akses pembaca aktif.`);
+    }
+
+    function loginAsDemo() {
+      state.user = {
+        name: "Clara",
+        email: "clara.demo@roseloom.id",
+        tier: "Member Gold"
+      };
+      saveJSON(STORAGE_KEYS.user, state.user);
+      closeAuthModal();
+      renderAuthUI();
+      renderCards();
+      showToast("Masuk sebagai Clara (Member Gold). Semua konten terbuka!");
+    }
+
+    function handleLogout() {
+      state.user = null;
+      localStorage.removeItem(STORAGE_KEYS.user);
+      renderAuthUI();
+      renderCards();
+      showToast("Kamu telah keluar dari akun pembaca.");
+    }
+
+    function openAuthModal() {
+      authModal.classList.remove("hidden");
+    }
+
+    function closeAuthModal() {
+      authModal.classList.add("hidden");
+    }
+
+    function toggleFavorite(id) {
+      const idx = state.favorites.indexOf(id);
+      if (idx === -1) {
+        state.favorites.push(id);
+        showToast("Ditambahkan ke Favorit ♥");
+      } else {
+        state.favorites.splice(idx, 1);
+        showToast("Dihapus dari Favorit");
+      }
+      saveJSON(STORAGE_KEYS.favorites, state.favorites);
+      updateStats();
+      renderCards();
+    }
+
+    function getFilteredItems() {
+      const query = state.search.trim().toLowerCase();
+      let list = LIBRARY_ITEMS.filter((item) => {
+        const matchCat =
+          state.category === "Semua"
+            ? true
+            : state.category === "Favorit"
+            ? state.favorites.includes(item.id)
+            : item.category === state.category;
+
+        const matchQuery =
+          !query ||
+          item.title.toLowerCase().includes(query) ||
+          item.description.toLowerCase().includes(query) ||
+          item.category.toLowerCase().includes(query) ||
+          item.author.toLowerCase().includes(query);
+
+        return matchCat && matchQuery;
+      });
+
+      if (state.sort === "title-asc") {
+        list = [...list].sort((a, b) => a.title.localeCompare(b.title, "id"));
+      } else if (state.sort === "read-asc") {
+        list = [...list].sort((a, b) => parseInt(a.readTime, 10) - parseInt(b.readTime, 10));
+      }
+      return list;
+    }
+
+    function renderSpotlight() {
+      const pick = LIBRARY_ITEMS[0];
+      spotlightCard.innerHTML = `
+        <div class="spotlight-media">
+          <img src="${pick.cover}" alt="${escapeHTML(pick.title)}" />
+          <span class="spotlight-badge">✦ Rekomendasi Hari Ini</span>
+        </div>
+        <div class="spotlight-body">
+          <small style="color: var(--pink-deep); font-weight: 700;">${escapeHTML(pick.category)} • ${escapeHTML(pick.readTime)}</small>
+          <h2 class="spotlight-title">${escapeHTML(pick.title)}</h2>
+          <p>${escapeHTML(pick.description)}</p>
+          <button class="btn btn-primary btn-sm" type="button" onclick="openReader('${pick.id}')">
+            Baca Sekarang
+          </button>
+        </div>
+      `;
+    }
+
+    function renderCards() {
+      const items = getFilteredItems();
+      cardsGrid.innerHTML = "";
+
+      resultInfo.textContent =
+        state.category === "Semua" && !state.search
+          ? `Menampilkan ${items.length} koleksi pilihan`
+          : `Menampilkan ${items.length} hasil untuk "${state.category}"${state.search ? ` • "${state.search}"` : ""}`;
+
+      if (items.length === 0) {
+        emptyState.classList.remove("hidden");
+        return;
+      }
+      emptyState.classList.add("hidden");
+
+      const unlocked = Boolean(state.user);
+      items.forEach((item) => {
+        const isFav = state.favorites.includes(item.id);
+        const isLocked = item.vipOnly && !unlocked;
+
+        const card = document.createElement("article");
+        card.className = "book-card";
+        card.innerHTML = `
+          <div class="book-cover">
+            <img src="${item.cover}" alt="${escapeHTML(item.title)}" loading="lazy" />
+            <div class="card-top-badges">
+              <span class="badge-cat">${escapeHTML(item.category)}</span>
+              ${item.vipOnly ? `<span class="badge-vip">${isLocked ? "🔒 Member" : "✦ Member"}</span>` : ""}
+            </div>
+          </div>
+          <div class="book-body">
+            <div class="book-meta-row">
+              <span>Oleh ${escapeHTML(item.author)}</span>
+              <span>${escapeHTML(item.readTime)}</span>
+            </div>
+            <h3 class="book-title">${escapeHTML(item.title)}</h3>
+            <p class="book-desc">${escapeHTML(item.description)}</p>
+            <div class="book-actions">
+              <button class="btn btn-soft btn-sm" type="button" onclick="openReader('${item.id}')">
+                ${isLocked ? "Buka Akses" : "Baca / Buka"}
+              </button>
+              <button
+                class="fav-btn ${isFav ? "active" : ""}"
+                type="button"
+                aria-label="Simpan ke favorit"
+                onclick="toggleFavorite('${item.id}')"
+              >
+                ${isFav ? "♥" : "♡"}
+              </button>
+            </div>
+          </div>
+        `;
+        cardsGrid.appendChild(card);
+      });
+    }
+
+    function openReader(id) {
+      const item = LIBRARY_ITEMS.find((entry) => entry.id === id);
+      if (!item) return;
+
+      const isLocked = item.vipOnly && !state.user;
+      const savedNote = state.notes[item.id] || "";
+
+      readerContent.innerHTML = `
+        <div class="reader-cover">
+          <img src="${item.cover}" alt="${escapeHTML(item.title)}" />
+        </div>
+        <div class="reader-body">
+          <span class="eyebrow">${escapeHTML(item.category)}</span>
+          <h2 id="readerTitle">${escapeHTML(item.title)}</h2>
+          <p class="reader-sub">Penulis: <strong>${escapeHTML(item.author)}</strong> • ${escapeHTML(item.readTime)}</p>
+          ${
+            isLocked
+              ? `
+                <div class="locked-box">
+                  <h3>🔒 Konten Khusus Member</h3>
+                  <p>Masuk atau gunakan akun demo pembaca untuk membaca bab lengkap dan menyimpan catatan pribadi.</p>
+                  <button class="btn btn-primary btn-sm" type="button" id="unlockFromReaderBtn">
+                    Masuk Sekarang
+                  </button>
+                </div>
+              `
+              : `
+                <div class="reader-excerpt">${escapeHTML(item.content)}</div>
+                <div class="note-box">
+                  <label for="readerNoteInput">Catatan Pribadi Pembaca</label>
+                  <textarea id="readerNoteInput" placeholder="Tulis refleksi, ringkasan, atau tips favoritmu di sini...">${escapeHTML(savedNote)}</textarea>
+                  <button class="btn btn-soft btn-sm" type="button" id="saveNoteBtn">
+                    Simpan Catatan
+                  </button>
+                </div>
+              `
+          }
+        </div>
+      `;
+
+      readerModal.classList.remove("hidden");
+
+      const unlockBtn = document.getElementById("unlockFromReaderBtn");
+      if (unlockBtn) {
+        unlockBtn.addEventListener("click", () => {
+          closeReader();
+          openAuthModal();
+        });
+      }
+
+      const saveNoteBtn = document.getElementById("saveNoteBtn");
+      if (saveNoteBtn) {
+        saveNoteBtn.addEventListener("click", () => {
+          state.notes[item.id] = document.getElementById("readerNoteInput").value;
+          saveJSON(STORAGE_KEYS.notes, state.notes);
+          showToast("Catatan bacaan tersimpan!");
+        });
+      }
+    }
+
+    function closeReader() {
+      readerModal.classList.add("hidden");
+    }
+
+    function escapeHTML(str) {
+      return String(str)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;");
+    }
+
+    document.querySelectorAll(".tab-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        state.category = btn.dataset.category;
+        renderCards();
+      });
+    });
+
+    searchInput.addEventListener("input", (e) => {
+      state.search = e.target.value;
+      renderCards();
+    });
+
+    sortSelect.addEventListener("change", (e) => {
+      state.sort = e.target.value;
+      renderCards();
+    });
+
+    resetFilterBtn.addEventListener("click", () => {
+      state.category = "Semua";
+      state.search = "";
+      searchInput.value = "";
+      document.querySelectorAll(".tab-btn").forEach((b) => {
+        b.classList.toggle("active", b.dataset.category === "Semua");
+      });
+      renderCards();
+    });
+
+    exploreBtn.addEventListener("click", () => {
+      document.getElementById("catalogSection").scrollIntoView({ behavior: "smooth" });
+    });
+
+    quickDemoBtn.addEventListener("click", loginAsDemo);
+    modalDemoBtn.addEventListener("click", loginAsDemo);
+    loginForm.addEventListener("submit", handleLoginSubmit);
+    closeAuthBtn.addEventListener("click", closeAuthModal);
+    closeReaderBtn.addEventListener("click", closeReader);
+
+    authModal.addEventListener("click", (e) => {
+      if (e.target === authModal) closeAuthModal();
+    });
+
+    readerModal.addEventListener("click", (e) => {
+      if (e.target === readerModal) closeReader();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeAuthModal();
+        closeReader();
+      }
+    });
+
+    updateStats();
+    renderAuthUI();
+    renderSpotlight();
+    renderCards();
+  </script>
+</body>
+</html>
